@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libmongocrypt-dev \
+    wget \
     curl 
 
 # Install extensions for php
@@ -53,7 +54,7 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data \
     /var/www/html/storage \
     /var/www/html/bootstrap/cache
-    
+
 RUN adduser --disabled-password --gecos '' appuser
 # USER appuser
 
