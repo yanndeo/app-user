@@ -14,12 +14,16 @@
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "behat/behat": "^3.13",
+        "behat/mink": "^1.10",
         "fakerphp/faker": "^1.9.1",
+        "friends-of-behat/mink-extension": "^2.7",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5.10",
+        "soulcodex/laravel-behat": "^1.0",
         "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
