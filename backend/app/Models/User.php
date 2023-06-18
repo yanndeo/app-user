@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -42,4 +44,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Profile belongs to one and only user
+     * 
+     * @return Jenssegers\Mongodb\Relations\EmbedsOne
+     */
+    public function profile()
+    {
+        return $this->embedsOne(Profile::class);
+    }
+
+    /**
+     * The inverse relation of hasMany
+     * 
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

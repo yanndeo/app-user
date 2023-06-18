@@ -1,7 +1,7 @@
 <table align="center">
     <tr style="text-align: center;">
         <td align="center" width="9999">
-            <img src="./doc/infra.png" width="150" alt="Project icon" style="margin: 25px auto; display: inline-block">
+            <img src="./doc/infra.png" alt="Project icon" style="margin: 25px auto; display: inline-block">
 
  <h1 style="color: black;"> App user Management </h1>
 

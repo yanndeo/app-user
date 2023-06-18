@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/api/phpinfo', function () {
-    phpinfo() ;
+    phpinfo();
 });
 
 Route::get('/api/users', function () {
     $users = User::all();
     return $users ;
 });
+
+
+Route::get('/api/groups', [Api\GroupController::class, 'index'])->name('group.index');
