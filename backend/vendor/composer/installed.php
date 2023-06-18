@@ -1091,6 +1091,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'squizlabs/php_codesniffer' => array(
+            'pretty_version' => '3.7.2',
+            'version' => '3.7.2.0',
+            'reference' => 'ed8e00df0a83aa96acf703f8c2979ff33341f879',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../squizlabs/php_codesniffer',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'symfony/browser-kit' => array(
             'pretty_version' => 'v6.3.0',
             'version' => '6.3.0.0',

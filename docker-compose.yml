@@ -1,6 +1,6 @@
 version: '3'
 services:
-  
+
   #PHP Service
   backend:
     build:
@@ -19,7 +19,7 @@ services:
       - ./backend/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
-  
+
   #Node/VueJs Serivce    
   frontend:
     stdin_open: true
@@ -33,13 +33,13 @@ services:
     environment:
       - HOST=0.0.0.0
       - CHOKIDAR_USEPOLLING=true
-    expose: 
+    expose:
       - "80"
-    ports: 
+    ports:
       - "8080:8080"
-      - "8081:8081"
+      - "8082:8082"
     networks:
-      - app-network  
+      - app-network
 
   #Nginx Service
   webserver:
@@ -75,7 +75,7 @@ services:
   #     - ./backend/mysql/my.cnf:/etc/mysql/my.cnf
   #   networks:
   #     - app-network
-  
+
   # #PHPMyadmin Service
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
@@ -97,14 +97,14 @@ services:
     image: mongo
     container_name: mongodb
     environment:
-        - MONGO_INITDB_ROOT_USERNAME=root
-        - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
       - ./backend/database/mongodb/db:/data/db
-    command: [--auth]
+    command: [ --auth ]
     networks:
       - app-network
 
@@ -122,10 +122,10 @@ services:
       - mongo
     restart: unless-stopped
     ports:
-      - "8082:8082"
+      - "8081:8081"
     networks:
       - app-network
-      
+
 #Docker Networks
 networks:
   app-network:

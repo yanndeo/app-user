@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 import axios from "axios";
+import VueRouter from "vue-router";
+
 import App from "./App.vue";
 
 // Créer une instance Axios
@@ -14,4 +16,4 @@ const app = createApp(App);
 app.config.globalProperties.$http = axiosInstance;
 
 // Montez l'application Vue
-app.mount("#app");
+app.use(VueRouter).mount("#app");

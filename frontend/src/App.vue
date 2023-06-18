@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome" />
+    <img alt="Vue logGod Please" src="./assets/logo.png">
+    <HelloWorld msg="Thanks GOD" />
     {{ users.length }}
     <ul class="my-list" v-if="users.length">
       <li v-for="user in users" :key="user.id"> <b>{{ user.name }}</b> : {{ user.email }}</li>
