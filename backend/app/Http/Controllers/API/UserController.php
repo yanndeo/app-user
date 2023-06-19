@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         
         $query = User::query();
-        $users = $query->paginate(2);
+        $users = $query->paginate(6);
 
         return  UserResource::collection($users);
 

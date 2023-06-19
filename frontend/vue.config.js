@@ -1,3 +1,6 @@
+//const path = require('path');
+
+
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   configureWebpack: {
@@ -12,7 +15,7 @@ module.exports = defineConfig({
      proxy: 'http://localhost/api',
 
     },
-   
+
     // watch: true,
     watchOptions: {
       ignored: /node_modules/,
@@ -20,5 +23,16 @@ module.exports = defineConfig({
     },
 
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: `
+          @import "@/scss/main.scss";
+        `
+      }
+    }
+  }
+,
+
   transpileDependencies: true,
 });
