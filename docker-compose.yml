@@ -103,11 +103,11 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
     restart: unless-stopped
-    ports:
-      - "27017:27017"
     volumes:
       - ./backend/database/mongodb/db:/data/db
     command: [ --auth ]
+    ports:
+      - "27017:27017"
     networks:
       - app-network
 

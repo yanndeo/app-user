@@ -1,3 +1,0 @@
-ifconfig
-ipconfig
-exit

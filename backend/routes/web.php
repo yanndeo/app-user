@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\FlareClient\Api;
 
@@ -20,6 +21,8 @@ Route::get(
         phpinfo();
     }
 );
+// Route::get( '/api/users', function () {
+//     return User::all();
+// });
 
-Route::resource('/api/users', App\Http\Controllers\UserController::class);
 Route::resource('/api/groups', App\Http\Controllers\GroupController::class);
