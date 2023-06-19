@@ -2,22 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**
- * Controller to manage user groups.
- * 
- * Allows to perform operations related to groups,
- * such as creating, modifying and deleting accounts.
- * 
- * @category Controllers
+ * Class GroupController
+ *
+ * @package App\Http\Controllers
  */
 class GroupController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *

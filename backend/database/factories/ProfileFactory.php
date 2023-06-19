@@ -18,9 +18,9 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'firstname' => $this->faker->firstName,
+            'first_name' => $this->faker->first_name,
             'phone'     => $this->faker->phoneNumber,
-            'lastname'  => $this->faker->lastName,
+            'last_name'  => $this->faker->last_name,
             'address'   => $this->faker->address
         ];
     }

@@ -17,8 +17,8 @@ return new class extends Migration
             'profiles',
             function (Blueprint $table) {
                 $table->id();
-                $table->string('firstname');
-                $table->string('lastname')->nullable();
+                $table->string('first_name');
+                $table->string('last_name')->nullable();
                 $table->string('phone')->nullable();
                 $table->longText('address')->nullable();
             }

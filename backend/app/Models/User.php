@@ -59,9 +59,21 @@ class User extends Authenticatable
     /**
      * The inverse relation of hasMany
      * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+
+    /**
+     * Get the full name of a user.
+     * 
+     * @return string
+     */
+    public function fullName(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }
