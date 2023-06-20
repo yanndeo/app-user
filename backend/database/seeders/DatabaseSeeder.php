@@ -7,6 +7,8 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * Create fake user and group linked
@@ -22,8 +24,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $groups = Group::factory()->count(5)->create();
-        $users = User::factory()->count(15)->create();
+        $admin['name'] = 'admin';
+        $admin['email'] = "admin@gmail.com";
+        $admin['password'] = Hash::make('admin');
+        $admin['email_verified_at'] = now();
+        $admin['remember_token'] = Str::random(10);
+        User::create($admin);
+
+        $groups = Group::factory()->count(6)->create();
+        $users = User::factory()->count(20)->create();
 
         foreach ($users as $user) {
             $randomGroup = $groups->random();

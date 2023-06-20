@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -21,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
         $query = User::query();
         $users = $query->paginate(6);
 
@@ -48,7 +50,7 @@ class UserController extends Controller
             'email' => 'required|email',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
 
@@ -60,8 +62,7 @@ class UserController extends Controller
         $profile->fill($data['profile']);
         $profile->save();
 
-        return response([ 'user' => new UserResource($property), 'message' => 'user Created Successfully'], 201);
-        
+        return response(['user' => new UserResource($user), 'message' => 'user Created Successfully'], 201);
     }
 
 
@@ -73,7 +74,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response([ 'user' => new UserResource($user), 'message' => 'Retrieved Successfully'], 200);
+        return response(['user' => new UserResource($user), 'message' => 'Retrieved Successfully'], 200);
     }
 
     /**
@@ -98,7 +99,7 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
-        return response([ 'user' => new UserResource($user), 'message' => 'user Updated Successfully'], 200);
+        return response(['user' => new UserResource($user), 'message' => 'user Updated Successfully'], 200);
     }
 
     /**

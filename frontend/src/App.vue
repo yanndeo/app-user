@@ -1,14 +1,14 @@
 <template>
   <nav>
     <!-- <router-link to="/">Login</router-link> | -->
-    <router-link to="/users">UTILISATEURS</router-link> & 
+    <router-link to="/users">UTILISATEURS</router-link> &
     <router-link to="/group">GROUPES</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style lang="scss">
-@import 'assets/scss/main.scss';
+@import "@/assets/scss/main.scss";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -20,6 +20,7 @@
 
 nav {
   padding: 30px;
+  margin-bottom: 60px;
 }
 
 nav a {

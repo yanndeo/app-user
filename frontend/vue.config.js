@@ -1,6 +1,3 @@
-//const path = require('path');
-
-
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   configureWebpack: {
@@ -9,11 +6,11 @@ module.exports = defineConfig({
       hot: true,
       // port: 8082, // CHANGE YOUR PORT HERE!
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-     },
-     proxy: 'http://localhost/api',
-
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
+      },
+      proxy: "http://localhost/api",
     },
 
     // watch: true,
@@ -21,18 +18,15 @@ module.exports = defineConfig({
       ignored: /node_modules/,
       poll: 1000,
     },
-
   },
   css: {
     loaderOptions: {
       sass: {
         additionalData: `
-          @import "@/scss/main.scss";
-        `
-      }
-    }
-  }
-,
-
+          @import "@/assets/scss/main";
+        `,
+      },
+    },
+  },
   transpileDependencies: true,
 });
