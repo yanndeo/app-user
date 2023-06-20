@@ -15,12 +15,9 @@ use Spatie\FlareClient\Api;
 |
 */
 
-Route::get(
-    '/api/phpinfo',
-    function () {
+Route::get( '/api/phpinfo', function () {
         phpinfo();
-    }
-);
+    })->name('login');
 // Route::get( '/api/users', function () {
 //     return User::all();
 // });

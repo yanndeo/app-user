@@ -20,9 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/register', 'App\Http\Controllers\Api\\AuthController@register');
-Route::post('/login', 'App\Http\Controllers\Api\\AuthController@login');
+Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
 
 Route::resource('/users', App\Http\Controllers\Api\UserController::class);
+//
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/user-detail', 'App\Http\Controllers\Api\AuthController@loginUserDetail');
+});
+
 
 // Route::apiResource('/property', PropertyController::class)->middleware('auth:api');
-

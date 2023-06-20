@@ -1,10 +1,13 @@
 <template>
-  <nav>
+    <nav>
     <!-- <router-link to="/">Login</router-link> | -->
     <router-link to="/users">UTILISATEURS</router-link> &
     <router-link to="/group">GROUPES</router-link>
   </nav>
-  <router-view />
+  <div class="border-red">
+    <router-view />
+  </div>
+  
 </template>
 
 <style lang="scss">
@@ -21,6 +24,7 @@
 nav {
   padding: 30px;
   margin-bottom: 60px;
+  border: 2px solid red;
 }
 
 nav a {
@@ -30,5 +34,15 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+.border-red {
+  border: 2px solid red;
+}
+
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
 }
 </style>

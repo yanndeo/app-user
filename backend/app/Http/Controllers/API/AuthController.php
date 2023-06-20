@@ -1,16 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\User as ModelsUser;
 use App\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
 
-    
+
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -21,17 +23,18 @@ class AuthController extends Controller
 
         $validatedData['password'] = bcrypt($request->password);
 
-        $user = User::create($validatedData);
+        $user = ModelsUser::create($validatedData);
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response([ 'user' => $user, 'access_token' => $accessToken]);
+        return response(['user' => $user, 'access_token' => $accessToken]);
     }
 
 
 
     public function login(Request $request)
     {
+
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
@@ -43,7 +46,13 @@ class AuthController extends Controller
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return response()->json(['access_token' => $accessToken]);
+    }
 
+
+    public function loginUserDetail()
+    {
+
+        return response()->json(['user', auth()->user()]);
     }
 }

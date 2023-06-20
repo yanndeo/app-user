@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
     baseURL: "http://localhost/api",
 });
   
-// Créez une application Vue
+// Crée une application Vue
 const app = createApp(App);
   
 // Ajouter l'instance Axios à Vue.prototype
