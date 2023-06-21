@@ -28,7 +28,7 @@ class User extends Eloquent implements AuthenticatableContrat
         'name',
         'email',
         'password',
-        'remember_token'
+        //remember_token'
     ];
 
     /**
@@ -38,7 +38,7 @@ class User extends Eloquent implements AuthenticatableContrat
      */
     protected $hidden = [
         'password',
-        // 'remember_token',
+        'remember_token',
     ];
 
     /**
@@ -53,7 +53,7 @@ class User extends Eloquent implements AuthenticatableContrat
 
     /**
      * Profile belongs to one and only user
-     * 
+     *
      * @return Jenssegers\Mongodb\Relations\EmbedsOne
      */
     public function profile()
@@ -63,7 +63,7 @@ class User extends Eloquent implements AuthenticatableContrat
 
     /**
      * The inverse relation of hasMany
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function group()
@@ -74,7 +74,7 @@ class User extends Eloquent implements AuthenticatableContrat
 
     /**
      * Get the full name of a user.
-     * 
+     *
      * @return string
      */
     public function fullName(): string

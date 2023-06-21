@@ -19,14 +19,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/register', 'App\Http\Controllers\Api\\AuthController@register');
+Route::post('/register', 'App\Http\Controllers\Api\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
 
-Route::resource('/users', App\Http\Controllers\Api\UserController::class);
+
+Route::get('users', 'App\Http\Controllers\Api\UserController@index');
+Route::resource('groups', App\Http\Controllers\Api\GroupController::class);
+
 //
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/user-detail', 'App\Http\Controllers\Api\AuthController@loginUserDetail');
+    Route::resource('users', App\Http\Controllers\Api\UserController::class)->except(['index']);
+    Route::get('/user-detail', 'App\Http\Controllers\Api\AuthController@loginUserDetail')->name('user.detail');
+    Route::post('/logout', 'App\Http\Controllers\Api\AuthController@logout')->name('logout.api');
+
 });
-
-
-// Route::apiResource('/property', PropertyController::class)->middleware('auth:api');

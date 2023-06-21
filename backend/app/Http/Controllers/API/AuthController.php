@@ -14,59 +14,77 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
+    CONST DEFAULT_PASSWORD = "password" ;
 
     /**
      * Store a newly created user in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
      */
     public function register(Request $request): JsonResponse
     {
+
+        $data = $request->all();
         $validatedData = $request->validate([
-            // 'name' => 'required|max:55',
+            //'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed'
         ]);
 
-        $validatedData['password'] = Hash::make($request->password);
-
+        $validatedData['password'] = Hash::make(self::DEFAULT_PASSWORD);
         $user = ModelUser::create($validatedData);
-
         $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response()->json(['user' => $user, 'access_token' => $accessToken]);
-
+        return response()->json(['user' => $user, 'access_token' => $accessToken], Response::HTTP_CREATED);
     }
 
 
     /**
      * Login user and  generate token
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
      */
     public function login(Request $request): JsonResponse
     {
-
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
         ]);
 
         if (!auth()->attempt($loginData)) {
-            return response(['message' => 'Invalid Credentials']);
+            return response()->json(['message' => 'Invalid Credentials'], Response::HTTP_UNAUTHORIZED);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
-        return response()->json(['access_token' => $accessToken]);
+        return response()->json([ 'user' => auth()->user(), 'access_token' => $accessToken], Response::HTTP_OK);
     }
 
-
-    public function loginUserDetail()
+    /**
+     * Get information about user logged
+     *
+     * @return JsonResponse
+     */
+    public function loginUserDetail(): JsonResponse
     {
+        return response()->json(['user' => auth()->user()], Response::HTTP_OK);
+    }
 
-        return response()->json(['user', auth()->user()]);
+    /**
+     * Logout
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        dd(Auth::user());
+        if($user = Auth::user()->token()) {
+            $user->revoke();
+            return response()->json(['message' => 'Logged out successfully'], Response::HTTP_OK);
+        }
+        else{
+            return response()->json(['message' => 'Unauthorisedxx'], Response::HTTP_UNAUTHORIZED);
+        }
     }
 }

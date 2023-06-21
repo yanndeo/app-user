@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +20,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -36,8 +37,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -69,31 +70,21 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function show(User $user)
     {
         return response(['user' => new UserResource($user), 'message' => 'Retrieved Successfully'], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function update(Request $request,  User $user)
     {
@@ -103,16 +94,14 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource in storage.
      *
-     * @param  int  $id
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->delete();
-
-        return response(['message' => 'User Deleted Successfully']);
+        return response()->json([ 'message' => 'User Deleted Successfully'], 200);
     }
 }

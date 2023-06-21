@@ -21,5 +21,3 @@ Route::get( '/api/phpinfo', function () {
 // Route::get( '/api/users', function () {
 //     return User::all();
 // });
-
-Route::resource('/api/groups', App\Http\Controllers\GroupController::class);
