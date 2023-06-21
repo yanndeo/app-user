@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +13,6 @@ use Spatie\FlareClient\Api;
 |
 */
 
-Route::get( '/api/phpinfo', function () {
-        phpinfo();
-    })->name('login');
-// Route::get( '/api/users', function () {
-//     return User::all();
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
