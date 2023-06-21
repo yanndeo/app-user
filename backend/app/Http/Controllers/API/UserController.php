@@ -14,23 +14,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use function Nette\Utils\first;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-
         $query = User::query();
+        $query->orderByDesc('created_at');
         $users = $query->paginate(6);
 
         return  UserResource::collection($users);
 
-        // return response([ 'user' => UserResource::collection($users), 'message' => 'Retrieved successfully'], Response::HTTP_OK);
     }
 
 
@@ -38,32 +38,40 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-
-        //$data = $request->all();
-
+        $data = $request->all();
         $validator = Validator::make($data, [
-            'profile.first_name' => 'required',
-            'profile.phone' => 'required',
+            'first_name' => 'required',
+            'phone' => 'required',
             'email' => 'required|email',
         ]);
 
+
         if ($validator->fails()) {
-            return response(['error' => $validator->errors(), 'Validation Error']);
+            return response()->json(['message' => $validator->errors()]);
         }
 
-        $user = User::firstOrNew(['email' => $data['email']]);
-        $user->password = $user->password ?? Hash::make('password');
+        $user = User::where('email', $data['email'])->first();
+        if (!$user) {
+            $user->password =  Hash::make('password');
+        }
+        $user->email = $data['email'] ;
+        $user->name = $data['first_name'];
         $user->save();
 
-        $profile = $user->profile()->firstOrNew([]);
-        $profile->fill($data['profile']);
-        $profile->save();
+        //profileData
+        $embedded = array(
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'phone' => $data['phone'],
+            'address' => $data['address']
+        ) ;
+        $user->profile()->create($embedded);
 
-        return response(['user' => new UserResource($user), 'message' => 'user Created Successfully'], 201);
+        return response()->json(['user' => new UserResource($user), 'message' => 'user Created Successfully'], 201);
     }
 
     /**

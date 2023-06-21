@@ -3,26 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\UserResource;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
+        return  GroupResource::collection(Group::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -33,11 +36,15 @@ class GroupController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Group $group)
     {
-        //
+        if($group) {
+            return response(['user' => new GroupResource($group), 'message' => 'Retrieved Successfully'], Response::HTTP_OK);
+        }
+
+        return response(['user' => new GroupResource($group), 'message' => 'Group not exist'], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -45,7 +52,7 @@ class GroupController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, Group $group)
     {
@@ -56,7 +63,7 @@ class GroupController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Group $group)
     {

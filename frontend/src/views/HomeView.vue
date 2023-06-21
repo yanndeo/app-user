@@ -13,7 +13,6 @@
       <h3 v-if="auth" class="title">
         Bonjour, <b>{{ auth.email }}</b>
 
-        {{auth._id}}
       </h3>
       <b class="text-error" v-if="error">Error: unauthorized! </b>
     </div>
@@ -35,7 +34,7 @@
               <span v-else>-</span>
             </td>
             <td>
-              <span v-if="user.last_name">{{ user.first_name }}</span>
+              <span v-if="user.last_name">{{ user.last_name }}</span>
               <span v-else>-</span>
             </td>
             <td>{{ user.email }}</td>
@@ -46,7 +45,6 @@
             <td>
               <div class="actions">
                 <button type="button" @click.prevent="handleShow(user.id)">View</button>
-                <button type="button">Edit</button>
                 <button type="button" @click.prevent="handleDelete(user.id)" v-if="auth && auth.email !== user.email" >
                   Delete
                 </button>
@@ -55,21 +53,21 @@
           </tr>
         </tbody>
       </table>
+
+
+
       <div class="pagination">
-        <a href="#" class="pagination__link pagination__link--prev"></a>
-        <a href="#" class="pagination__link">1</a>
-        <a href="#" class="pagination__link">2</a>
-        <a href="#" class="pagination__link">3</a>
-        <a href="#" class="pagination__link">4</a>
-        <a href="#" class="pagination__link">5</a>
-        <a href="#" class="pagination__link pagination__link--next"></a>
+        <a href="#" class="pagination__link pagination__link--prev" @click="fetchData(pagination.prevPage)"></a>
+        <a href="#" class="pagination__link "  v-for="page in pagination.lastPage" :key="page" @click="fetchData(page)" >{{page}}</a>
+        <a href="#" class="pagination__link pagination__link--next" @click="fetchData(pagination.nextPage)" ></a>
       </div>
     </div>
 
     <aside>
+      <b v-if="form.id">{{form.id}} </b>
       <div class="h-100">
         <form class="form form-register" @submit.prevent="handleSubmit">
-          <div class="field">
+          <div class="field" v-if="!form.id">
             <input type="text" placeholder="Email" v-model="form.email" />
           </div>
           <div class="field">
@@ -93,7 +91,8 @@
             <input type="text" placeholder="Address" v-model="form.address" />
           </div>
 
-          <button type="submit">Save</button>
+          <button type="submit" >Save</button>
+
         </form>
       </div>
     </aside>
@@ -112,23 +111,39 @@ export default {
       isLoading: true,
       auth: null,
       error: false,
+      pagination: {
+        currentPage: null,
+        lastPage: null,
+        nextPage: null,
+        prevPage: null,
+      },
+
       form: {
         phone: "",
         address: "",
         last_name: "",
         first_name: "",
         email: "",
+        id:""
       },
     };
   },
   methods: {
-    async fetchData() {
+    async fetchData(page) {
       try {
-        const response = await this.$http.get("/users");
+        const response = await this.$http.get(`/users?page=${page}`);
         if (response) {
           console.log(response.data);
           this.users = response.data.data;
           this.isLoading = false;
+
+          const pagination = response.data.meta;
+
+          this.pagination.currentPage = pagination.current_page;
+          this.pagination.lastPage = pagination.last_page;
+          this.pagination.nextPage = pagination.links.next;
+          this.pagination.prevPage = pagination.links.prev;
+
         }
       } catch (e) {
         console.log(e);
@@ -186,7 +201,8 @@ export default {
         console.log(e)
       }
     },
-    handleSubmit() {
+
+    async handleSubmit() {
       const data = {
         email: this.form.email,
         first_name: this.form.first_name,
@@ -195,14 +211,24 @@ export default {
         address: this.form.address,
       };
 
-      this.$http
-        .post("/api/users", data, this._getAuthorizationConfig())
-        .then((response) => {
+      try {
+        const response =  await this.$http.post("/users", data, this._getAuthorizationConfig())
+        if(201 === response.status) {
           console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          const userIndex = this.users.findIndex(user => user.id === response.data.user.id);
+          if (userIndex !== -1) {
+           this.users.splice(userIndex, 1, response.data.user);
+          } else {
+            this.users.unshift(response.data.user);
+
+          }
+
+
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
     },
 
     _getAuthorizationConfig() {
@@ -215,7 +241,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchData();
+    this.fetchData(1);
     this.isUserLoggin();
     this.isLoading = false;
   },

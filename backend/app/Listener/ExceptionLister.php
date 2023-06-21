@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Listener;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 

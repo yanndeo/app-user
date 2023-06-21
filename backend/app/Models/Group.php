@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 /**
- * Model to represent a user
- * 
+ * Model to represent a Group
+ *
  * @category Model
  */
-class Group extends Model
+class Group extends Eloquent
 {
     use HasFactory;
 
