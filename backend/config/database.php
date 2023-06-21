@@ -15,7 +15,9 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    //'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('MONGO_CONNECTION', 'mongodb'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +36,17 @@ return [
     */
 
     'connections' => [
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('MONGO_HOST'),
+            'port'     => env('MONGO_PORT'),
+            'database' => env('MONGO_DATABASE'),
+            'username' => env('MONGO_USERNAME'),
+            'password' => env('MONGO_PASSWORD'),
+            'options'  => [
+                'database' => env('MONGO_AUTH_DATABASE')
+            ]
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

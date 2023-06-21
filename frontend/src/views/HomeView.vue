@@ -12,7 +12,6 @@
     >
       <h3 v-if="auth" class="title">
         Bonjour, <b>{{ auth.email }}</b>
-
       </h3>
       <b class="text-error" v-if="error">Error: unauthorized! </b>
     </div>
@@ -91,6 +90,12 @@
             <input type="text" placeholder="Address" v-model="form.address" />
           </div>
 
+          <div class="neumorphic-select  w-100" >
+            <select v-model="form.groupe">
+              <option :value="group.id"  :selected="form.groupe === group.id" v-for="group in groups" :key="group.id">{{group.name}}</option>
+            </select>
+          </div>
+
           <button type="submit" >Save</button>
 
         </form>
@@ -117,8 +122,9 @@ export default {
         nextPage: null,
         prevPage: null,
       },
-
+      groups: [],
       form: {
+        groupe: "",
         phone: "",
         address: "",
         last_name: "",
@@ -194,7 +200,8 @@ export default {
         const response = await this.$http.get(`/users/${userId}`,);
         if (response && 200 === response.status) {
           const {user} = response.data;
-          this.form = {...user}
+          this.form = {...user};
+          console.log('user', user)
         }
         _this.isLoading = false;
       } catch (e) {
@@ -209,6 +216,7 @@ export default {
         last_name: this.form.last_name,
         phone: this.form.phone,
         address: this.form.address,
+        groupe: this.form.groupe,
       };
 
       try {
@@ -220,15 +228,25 @@ export default {
            this.users.splice(userIndex, 1, response.data.user);
           } else {
             this.users.unshift(response.data.user);
-
           }
-
-
         }
       } catch (error) {
         console.log(error);
       }
 
+    },
+
+    async fetchGroupe() {
+      try {
+        const response = await this.$http.get("/groupes");
+        if (response) {
+          console.log(response.data);
+          this.groups = response.data.data;
+          this.isLoading = false;
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     _getAuthorizationConfig() {
@@ -242,6 +260,7 @@ export default {
   },
   mounted() {
     this.fetchData(1);
+    this.fetchGroupe();
     this.isUserLoggin();
     this.isLoading = false;
   },

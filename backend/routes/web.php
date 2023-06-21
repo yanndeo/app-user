@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+;
+
+Route::get( '/api/phpinfo', function () {
+    phpinfo();
 });
+// Route::get( '/api/users', function () {
+//     return User::all();
+// });

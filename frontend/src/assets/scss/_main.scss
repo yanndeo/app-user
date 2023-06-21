@@ -282,5 +282,35 @@ h1 {
     border-radius: 0px;
   }
 
-
   }
+
+.neumorphic-select {
+  display: inline-block;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2),
+  -4px -4px 8px rgba(255, 255, 255, 0.5);
+}
+
+.neumorphic-select select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  padding: 4px;
+  outline: none;
+  width: 100%;
+}
+
+/* Style des options du sélecteur */
+.neumorphic-select select option {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+/* Style du survol des options */
+.neumorphic-select select option:hover {
+  background-color: #e0e0e0;
+}
