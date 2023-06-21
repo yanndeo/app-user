@@ -12,6 +12,8 @@
     >
       <h3 v-if="auth" class="title">
         Bonjour, <b>{{ auth.email }}</b>
+
+        {{auth._id}}
       </h3>
       <b class="text-error" v-if="error">Error: unauthorized! </b>
     </div>
@@ -27,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="user in users" :key="user.id"   @click.prevent="handleShow(user.id)">
             <td>
               <span v-if="user.first_name">{{ user.first_name }}</span>
               <span v-else>-</span>
@@ -43,9 +45,9 @@
             </td>
             <td>
               <div class="actions">
-                <button type="button">View</button>
+                <button type="button" @click.prevent="handleShow(user.id)">View</button>
                 <button type="button">Edit</button>
-                <button type="button" @click.prevent="handleDelete(user.id)">
+                <button type="button" @click.prevent="handleDelete(user.id)" v-if="auth && auth.email !== user.email" >
                   Delete
                 </button>
               </div>
@@ -65,7 +67,6 @@
     </div>
 
     <aside>
-      xxx
       <div class="h-100">
         <form class="form form-register" @submit.prevent="handleSubmit">
           <div class="field">
@@ -172,6 +173,19 @@ export default {
       }
     },
 
+    async handleShow(userId) {
+      let _this = this;
+      try {
+        const response = await this.$http.get(`/users/${userId}`,);
+        if (response && 200 === response.status) {
+          const {user} = response.data;
+          this.form = {...user}
+        }
+        _this.isLoading = false;
+      } catch (e) {
+        console.log(e)
+      }
+    },
     handleSubmit() {
       const data = {
         email: this.form.email,
@@ -180,14 +194,9 @@ export default {
         phone: this.form.phone,
         address: this.form.address,
       };
-      const access_token = localStorage.getItem("access_token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      };
+
       this.$http
-        .post("/api/users", data, config)
+        .post("/api/users", data, this._getAuthorizationConfig())
         .then((response) => {
           console.log(response);
         })

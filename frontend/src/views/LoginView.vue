@@ -61,9 +61,7 @@ export default {
   created() {
     const accessToken = localStorage.getItem("access_token");
     const user = localStorage.getItem("user");
-
     if (accessToken && user) {
-      // Rediriger vers la page users
       this.$router.push("/users");
     }
   },

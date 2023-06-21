@@ -5,7 +5,7 @@
     <router-link to="/group">GROUPES</router-link>
   </nav>
     <button v-if="isAuth" type="button" @click.prevent="handleLogout">Deconnexion</button>
-    <router-link to="/" v-else>Se connecter</router-link>
+
     <div>
     <router-view />
   </div>
@@ -30,22 +30,22 @@
               };
 
               try {
-                    const response = await this.$http.post(`/logout`, config);
+                    const response = await this.$http.post(`/logout`, {}, config);
                     console.log('res', response);
-                    /*if( 200 === response.status) {
+                    if( 200 === response.status) {
                         console.log('rr', response)
                         localStorage.removeItem('access_token');
                         localStorage.removeItem('user');
-
-                        this.$router.push("/login");
-                    }*/
+                        this.$router.push("/");
+                        this.isAuth = false
+                    }
               } catch (error) {
                     console.log('err', error)
               }
 
             }
         },
-        created() {
+        mounted() {
             //fake simulation
             const access_token = localStorage.getItem("access_token");
             if(access_token) {

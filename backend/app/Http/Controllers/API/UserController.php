@@ -30,7 +30,7 @@ class UserController extends Controller
 
         return  UserResource::collection($users);
 
-        // return response([ 'user' => UserResource::collection($users), 'message' => 'Retrieved successfully'], 200);
+        // return response([ 'user' => UserResource::collection($users), 'message' => 'Retrieved successfully'], Response::HTTP_OK);
     }
 
 
@@ -43,7 +43,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $data = $request->all();
+        //$data = $request->all();
 
         $validator = Validator::make($data, [
             'profile.first_name' => 'required',
@@ -66,7 +66,6 @@ class UserController extends Controller
         return response(['user' => new UserResource($user), 'message' => 'user Created Successfully'], 201);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -75,7 +74,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response(['user' => new UserResource($user), 'message' => 'Retrieved Successfully'], 200);
+        if($user) {
+            return response(['user' => new UserResource($user), 'message' => 'Retrieved Successfully'], Response::HTTP_OK);
+        }
+
+        return response(['user' => new UserResource($user), 'message' => 'User not exist'], Response::HTTP_NOT_FOUND);
     }
 
 
@@ -90,7 +93,7 @@ class UserController extends Controller
     {
         $user->update($request->all());
 
-        return response(['user' => new UserResource($user), 'message' => 'user Updated Successfully'], 200);
+        return response(['user' => new UserResource($user), 'message' => 'user Updated Successfully'], Response::HTTP_OK);
     }
 
     /**
@@ -101,7 +104,12 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-        $user->delete();
-        return response()->json([ 'message' => 'User Deleted Successfully'], 200);
+        if( auth()->user()->id !== $user->id) {
+            $user->delete();
+            return response()->json([ 'message' => 'User Deleted Successfully'], Response::HTTP_OK);
+        } else {
+            return response()->json([ 'message' => ''], Response::HTTP_UNAUTHORIZED);
+        }
+
     }
 }
