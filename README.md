@@ -21,6 +21,9 @@ to build and up all containers with all dependencies for frontend and backend fo
 Execute `make drop` command to stop and delete all containers, volumes docker
     
  ### Note
+ 
+ Stack : Laravel Mongo and Vuejs.
+ 
  You can connect to the database with: Robo3T.
    - username : root
    - password : root
@@ -28,6 +31,10 @@ Execute `make drop` command to stop and delete all containers, volumes docker
    - auth Mechanism : SCRAM-SHA-1
    - port: 27017 / address: your ip 
   
-  Or you can decomment Mongo-express service in docker-compose.yml to use mongo express
+  Or you can decomment Mongo-express service in docker-compose.yml to use mongo express.
      
+     
+     Front   http://localhost:8080
+     Api:    http://localhost/api/v1/users 
+             http://localhost/api/v1/groupes 
  

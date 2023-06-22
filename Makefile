@@ -50,7 +50,6 @@ prepare-backend:
 	docker exec -it --user appuser backend bash  -c "php artisan passport:install"
 	docker exec -it --user appuser backend bash  -c "php artisan db:seed"
 	docker exec -it --user appuser backend bash  -c "php artisan route:list"
-	make exec-backend
 
 prepare-frontend:
 	docker exec -it frontend bash  -c "npm install"
@@ -67,6 +66,8 @@ all:
 	make prepare-frontend
 	@echo "Front:  http://localhost:8080"
 	@echo "Api:    http://localhost/api/v1/users"
+	make exec-backend
+
 
 
 
