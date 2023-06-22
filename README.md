@@ -18,8 +18,8 @@ to build and up all containers with all dependencies for frontend and backend fo
 - keys oauth generated
 - database app_user_db created (root/root)
 
-Execute `make drop` command to stop and delete all containers, volumes docker
-    
+Execute `make drop` command to stop and delete all containers, volumes docker.
+Before,you need to make sure you have the docker daemon running.
  ### Note
  
  Stack : Laravel Mongo and Vuejs.
