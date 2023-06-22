@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::prefix('v1')->group(function () {
 
 Route::post('/register', 'App\Http\Controllers\Api\AuthController@register');
 Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
@@ -32,4 +33,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('users', App\Http\Controllers\Api\UserController::class)->except(['index', 'show']);
     Route::get('/user-detail', 'App\Http\Controllers\Api\AuthController@loginUserDetail')->name('user.detail');
     Route::post('/logout', 'App\Http\Controllers\Api\AuthController@logout')->name('logout.api');
+});
+
 });

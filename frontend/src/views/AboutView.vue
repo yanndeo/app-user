@@ -13,7 +13,11 @@
           <tr v-for="group in groups" :key="group.id">
             <td>{{group.name}}</td>
             <td> {{ group.users.length}}</td>
-              <button type="button" @click.prevent="handleShow(group.id)">View</button>
+                  <td>
+                      <div class="actions">
+                      <button type="button" @click.prevent="handleShow(group.id)">View</button>
+                      </div>
+                  </td>
           </tr>
         </tbody>
       </table>

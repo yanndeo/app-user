@@ -6,7 +6,6 @@
       style="
         display: flex;
         justify-content: space-between;
-        width: 40%;
         margin-bottom: 20px;
       "
     >
@@ -44,7 +43,7 @@
             <td>
               <div class="actions">
                 <button type="button" @click.prevent="handleShow(user.id)">View</button>
-                <button type="button" @click.prevent="handleDelete(user.id)" v-if="auth && auth.email !== user.email" >
+                <button type="button" @click.prevent="handleDelete(user.id)" v-if=" auth?.email !== user.email" >
                   Delete
                 </button>
               </div>

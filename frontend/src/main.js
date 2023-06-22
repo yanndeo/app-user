@@ -6,7 +6,7 @@ import router from './router'
 
 // Créer une instance Axios
 const axiosInstance = axios.create({
-    baseURL: "http://localhost/api",
+    baseURL: "http://localhost/api/v1",
 });
   
 // Crée une application Vue

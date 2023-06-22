@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libmongocrypt-dev \
     wget \
+    make \
     curl
 
 # Install extensions for php
@@ -57,7 +58,6 @@ RUN chown -R www-data:www-data \
 
 RUN adduser --disabled-password --gecos '' appuser
 # USER appuser
-
 
 # Expose port 9000 and start php-fpm server (for FastCGI Process Manager)
 EXPOSE 9000
