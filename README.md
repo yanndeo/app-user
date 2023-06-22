@@ -23,6 +23,9 @@ Before,you need to make sure you have the docker daemon running.
  ### Note
  
  Stack : Laravel Mongo and Vuejs.
+Login: 
+   - username :  admin@admin.com
+   - password : admin
  
  You can connect to the database with: Robo3T.
    - username : root
