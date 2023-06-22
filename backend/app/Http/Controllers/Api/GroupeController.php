@@ -34,6 +34,7 @@ class GroupeController extends Controller
         if($groupe) {
             return response(['groupe' => new GroupeResource($groupe), 'message' => 'Retrieved Successfully'], Response::HTTP_OK);
         }
+        
         return response(['groupe' => new GroupeResource($groupe), 'message' => 'Group not exist'], Response::HTTP_NOT_FOUND);
     }
 

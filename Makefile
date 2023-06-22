@@ -9,6 +9,12 @@ start:
 	docker-compose start
 down:
 	docker-compose down
+stats:
+	docker stats
+ps:
+	docker compose ps
+logs:
+	docker compose logs
 
 
 restart:
@@ -37,10 +43,11 @@ install:
 prepare-backend:
 	make copy-env
 	docker exec -it --user appuser backend bash  -c "composer install --no-interaction"
+	docker exec -it --user appuser backend bash  -c "php artisan migrate:rollback"
 	docker exec -it --user appuser backend bash  -c "php artisan key:generate"
 	docker exec -it --user appuser backend bash  -c "php artisan fix:passport"
-	docker exec -it --user appuser backend bash  -c "php artisan passport:install"
 	docker exec -it --user appuser backend bash  -c "php artisan migrate"
+	docker exec -it --user appuser backend bash  -c "php artisan passport:install"
 	docker exec -it --user appuser backend bash  -c "php artisan db:seed"
 	docker exec -it --user appuser backend bash  -c "php artisan route:list"
 	make exec-backend
@@ -54,6 +61,12 @@ drop:
 	docker rm $$(docker ps -a -q)
 	docker-compose down --volumes --remove-orphans
 
+all:
+	make install
+	make prepare-backend
+	make prepare-frontend
+	@echo "Front:  http://localhost:8080"
+	@echo "Api:    http://localhost/api/v1/users"
 
 
 

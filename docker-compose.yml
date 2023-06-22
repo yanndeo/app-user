@@ -111,7 +111,7 @@ services:
     networks:
       - app-network
 
-  #Mongo-esrpress service
+  #Mongo-express service
   # mongo-express:
   #   image: mongo-express
   #   container_name: mexpress

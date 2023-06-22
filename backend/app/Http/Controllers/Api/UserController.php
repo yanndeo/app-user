@@ -30,7 +30,6 @@ class UserController extends Controller
         $users = $query->paginate(6);
 
         return  UserResource::collection($users);
-
     }
 
 
@@ -72,7 +71,7 @@ class UserController extends Controller
 
         $user->profile()->create($embeddedProfile);
 
-        return response()->json(['user' => new UserResource($user), 'message' => 'user Created Successfully'], 201);
+        return response()->json(['user' => new UserResource($user), 'message' => 'user Created Successfully'], Response::HTTP_CREATED);
     }
 
     /**

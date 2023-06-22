@@ -10,4 +10,24 @@
 </tr>
 </table>
 
-## 1. Install Dependencies
+## 1. How to Run
+ Execute the command:
+  `make all`
+to build and up all containers with all dependencies for frontend and backend folders.
+- migrations
+- keys oauth generated
+- database app_user_db created (root/root)
+
+Execute `make drop` command to stop and delete all containers, volumes docker
+    
+ ### Note
+ You can connect to the database with: Robo3T.
+   - username : root
+   - password : root
+   - authentication database :  admin
+   - auth Mechanism : SCRAM-SHA-1
+   - port: 27017 / address: your ip 
+  
+  Or you can decomment Mongo-express service in docker-compose.yml to use mongo express
+     
+ 
